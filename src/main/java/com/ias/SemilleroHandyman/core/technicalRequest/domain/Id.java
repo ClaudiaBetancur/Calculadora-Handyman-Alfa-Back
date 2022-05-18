@@ -1,4 +1,4 @@
-package com.ias.SemilleroHandyman.core.domain.technicalRecuest;
+package com.ias.SemilleroHandyman.core.technicalRequest.domain;
 
 import org.apache.commons.lang3.Validate;
 

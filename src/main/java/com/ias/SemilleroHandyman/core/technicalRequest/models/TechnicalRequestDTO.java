@@ -1,4 +1,4 @@
-package com.ias.SemilleroHandyman.core.domain.models;
+package com.ias.SemilleroHandyman.core.technicalRequest.models;
 
 public class TechnicalRequestDTO {
 private Integer ID;

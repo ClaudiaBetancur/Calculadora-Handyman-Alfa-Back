@@ -1,14 +1,14 @@
-package com.ias.SemilleroHandyman.core.domain.technicalRecuest;
+package com.ias.SemilleroHandyman.core.technicalRequest.domain;
 
-public class TechnicalRecuest {
+public class TechnicalRequest {
 
     public final Id id;
     public final TechnicalId technicalId;
-    public final RecuestId recuestId;
+    public final RequestId recuestId;
     public final StarDate starDate;
     public final EndDate starEnd;
 
-    public TechnicalRecuest(Id id, TechnicalId technicalId, RecuestId recuestId, StarDate starDate, EndDate starEnd) {
+    public TechnicalRequest(Id id, TechnicalId technicalId, RequestId recuestId, StarDate starDate, EndDate starEnd) {
         this.id = id;
         this.technicalId = technicalId;
         this.recuestId = recuestId;
@@ -24,7 +24,7 @@ public class TechnicalRecuest {
         return technicalId;
     }
 
-    public RecuestId getRecuestId() {
+    public RequestId getRecuestId() {
         return recuestId;
     }
 

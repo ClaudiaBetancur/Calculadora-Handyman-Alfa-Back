@@ -1,15 +1,17 @@
-package com.ias.SemilleroHandyman.core.domain.technicalRecuest;
+package com.ias.SemilleroHandyman.core.technicalRequest.domain;
 
 import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDateTime;
 
-public class EndDate {
+public class StarDate {
 
-    private  final  LocalDateTime value;
+    private final LocalDateTime value;
 
-    public EndDate(LocalDateTime value) {
-        Validate.notNull(value,  "StarEnd date start can not be null.");
+    public StarDate(LocalDateTime value) {
+        Validate.notNull(value,  "StarDate date start can not be null.");
+
+
         this.value = value;
     }
 

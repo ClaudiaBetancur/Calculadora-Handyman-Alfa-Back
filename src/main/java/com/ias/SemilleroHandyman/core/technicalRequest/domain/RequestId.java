@@ -1,12 +1,12 @@
-package com.ias.SemilleroHandyman.core.domain.technicalRecuest;
+package com.ias.SemilleroHandyman.core.technicalRequest.domain;
 
 import org.apache.commons.lang3.Validate;
 
-public class RecuestId {
+public class RequestId {
 
     private  final Integer value;
 
-    public RecuestId(Integer value) {
+    public RequestId(Integer value) {
         Validate.notNull(value, "RecuestId identification can not be null.");
         this.value = value;
     }
