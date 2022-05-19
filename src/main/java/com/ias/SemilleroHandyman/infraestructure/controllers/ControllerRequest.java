@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class ControllerRequest {
 
     public final CreateRequestUseCase creatRequestUseCase;
@@ -17,11 +19,11 @@ public class ControllerRequest {
         this.creatRequestUseCase = creatRequestUseCase;
     }
 
-    @RequestMapping(value = "/serviceRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/technicalRequest", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
-            return ResponseEntity.ok(technical);
+            return ResponseEntity.ok("Registro exitoso.");
 
         } catch (IllegalArgumentException | NullPointerException e) {
             ApplicationError aplicationError = new ApplicationError(

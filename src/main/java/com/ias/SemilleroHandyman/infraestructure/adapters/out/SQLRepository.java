@@ -21,17 +21,17 @@ public class SQLRepository implements RepositoryTechnical {
 
     @Override
     public void create(TechnicalRequest technicalRequest) {
-        String sql = "INSERT INTO ServiceRequest (id,technical_id,request_id,start_date,end_date) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO technicals_x_requests (technical_id,request_id,start_date,end_date) VALUES (?, ?, ?, ?)";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setLong(1,technicalRequest. getId().getValue());
-            preparedStatement.setLong(2, technicalRequest.getTechnicalId().getValue());
-            preparedStatement.setInt(3, technicalRequest.getRequestId().getValue());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(technicalRequest.getStarDate().toString()));
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(technicalRequest.getEndDate().toString()));
-            preparedStatement.executeUpdate();
+            //preparedStatement.setInt(1,technicalRequest. getId().getValue());
+            preparedStatement.setInt(1, technicalRequest.getTechnicalId().getValue());
+            preparedStatement.setInt(2, technicalRequest.getRequestId().getValue());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(technicalRequest.getStarDate().getValue()));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(technicalRequest.getEndDate().getValue()));
+            preparedStatement.execute();
 
         } catch (SQLException exception) {
             throw new RuntimeException("Error querying database " + exception.getMessage(),  exception);

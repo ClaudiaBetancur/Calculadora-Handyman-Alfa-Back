@@ -11,9 +11,9 @@ public class StartDate {
 
 
     public StartDate(LocalDateTime value) {
-        LocalDateTime localDateTime = LocalDateTime.parse(new Date().toString());
+        LocalDateTime localDateTime = LocalDateTime.now();
         Validate.notNull(value,  "StarEnd date start can not be null.");
-        Validate.isTrue(localDateTime.isBefore(value), "the start date cannot be greater than the current date");
+        Validate.isTrue(localDateTime.isAfter(value), "the start date cannot be greater than the current date");
         this.value = value;
     }
 
