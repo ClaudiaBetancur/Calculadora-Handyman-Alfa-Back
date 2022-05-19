@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 
 public class StarDate {
 
-    private final LocalDateTime value;
+    private final Integer value;
 
-    public StarDate(LocalDateTime value) {
+    public StarDate(Integer value) {
         Validate.notNull(value,  "StarDate date start can not be null.");
 
 
         this.value = value;
     }
 
-    public LocalDateTime getValue() {
+    public Integer getValue() {
         return value;
     }
 

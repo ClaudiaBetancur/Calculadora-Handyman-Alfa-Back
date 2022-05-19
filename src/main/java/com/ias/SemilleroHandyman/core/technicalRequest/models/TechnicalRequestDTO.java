@@ -1,26 +1,37 @@
 package com.ias.SemilleroHandyman.core.technicalRequest.models;
 
-public class TechnicalRequestDTO {
-private Integer ID;
-private Integer technicalId;
-private Integer recuestId;
-private Integer starDate;
-private Integer starend;
+import com.ias.SemilleroHandyman.core.technicalRequest.domain.*;
 
-    public TechnicalRequestDTO(Integer ID, Integer technicalId, Integer recuestId, Integer starDate, Integer starend) {
-        this.ID = ID;
+public class TechnicalRequestDTO {
+    private Integer id;
+    private Integer technicalId;
+    private Integer recuestId;
+    private Integer starDate;
+    private Integer endStar;
+
+    public TechnicalRequestDTO(Integer id, Integer technicalId, Integer recuestId, Integer starDate, Integer endStar) {
+        this.id = id;
         this.technicalId = technicalId;
         this.recuestId = recuestId;
         this.starDate = starDate;
-        this.starend = starend;
+        this.endStar = endStar;
     }
 
-    public Integer getID() {
-        return ID;
+    public ServiceRequest toDomain() {
+        return new ServiceRequest(new Id(id),
+                new TechnicalId(technicalId),
+                new RequestId(recuestId),
+                new StarDate(starDate),
+                new EndDate(endStar)
+        );
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getTechnicalId() {
@@ -47,11 +58,11 @@ private Integer starend;
         this.starDate = starDate;
     }
 
-    public Integer getStarend() {
-        return starend;
+    public Integer getEndStar() {
+        return endStar;
     }
 
-    public void setStarend(Integer starend) {
-        this.starend = starend;
+    public void setEndStar(Integer endStar) {
+        this.endStar = endStar;
     }
 }
