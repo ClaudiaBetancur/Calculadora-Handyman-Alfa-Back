@@ -7,17 +7,14 @@ import java.time.LocalDateTime;
 public class TechnicalRequestDTO {
     private Integer id;
     private Integer technicalId;
-    private Integer recuestId;
+    private Integer requestId;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public TechnicalRequestDTO() {
-    }
-
-    public TechnicalRequestDTO(Integer id, Integer technicalId, Integer recuestId, LocalDateTime startDate, LocalDateTime endDate) {
+    public TechnicalRequestDTO(Integer id, Integer technicalId, Integer requestId, LocalDateTime startDate, LocalDateTime endDate) {
         this.id = id;
         this.technicalId = technicalId;
-        this.recuestId = recuestId;
+        this.requestId = requestId;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -25,7 +22,7 @@ public class TechnicalRequestDTO {
     public TechnicalRequest toDomain() {
         return new TechnicalRequest(new Id(id),
                 new TechnicalId(technicalId),
-                new RequestId(recuestId),
+                new RequestId(requestId),
                 new StartDate(startDate),
                 new EndDate(endDate)
         );
@@ -47,12 +44,12 @@ public class TechnicalRequestDTO {
         this.technicalId = technicalId;
     }
 
-    public Integer getRecuestId() {
-        return recuestId;
+    public Integer getRequestId() {
+        return requestId;
     }
 
-    public void setRecuestId(Integer recuestId) {
-        this.recuestId = recuestId;
+    public void setRequestId(Integer recuestId) {
+        this.requestId = recuestId;
     }
 
     public LocalDateTime getStartDate() {

@@ -13,7 +13,7 @@ public class EndDate {
     public EndDate(LocalDateTime value) {
         LocalDateTime localDateTime = LocalDateTime.now();
         Validate.notNull(value,  "StarEnd date start can not be null.");
-        Validate.isTrue(localDateTime.isBefore(value), "the end date cannot be greater than the current date");
+        Validate.isTrue(localDateTime.isAfter(value), "the end date cannot be greater than the current date");
         this.value = value;
     }
 

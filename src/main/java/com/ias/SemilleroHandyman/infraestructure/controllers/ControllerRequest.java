@@ -19,11 +19,11 @@ public class ControllerRequest {
         this.creatRequestUseCase = creatRequestUseCase;
     }
 
-    @RequestMapping(value = "/serviceRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/technicalRequest", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
-            return ResponseEntity.ok(technical);
+            return ResponseEntity.ok("Registro exitoso.");
 
         } catch (IllegalArgumentException | NullPointerException e) {
             ApplicationError aplicationError = new ApplicationError(
