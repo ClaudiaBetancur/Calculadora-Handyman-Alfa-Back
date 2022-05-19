@@ -1,7 +1,7 @@
-package com.ias.SemilleroHandyman.core.technicalRequest.ports.out;
+package com.ias.SemilleroHandyman.technicalRequest.application.ports.out;
 
-import com.ias.SemilleroHandyman.core.technicalRequest.domain.ServiceRequest;
+import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRequest;
 
 public interface RepositoryTechnical {
-    void create(ServiceRequest serviceRequest);
+    void create(TechnicalRequest technicalRequest);
 }

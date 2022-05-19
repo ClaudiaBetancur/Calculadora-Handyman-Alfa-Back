@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class EndDate {
 
-    private  final Integer value;
+    private  final LocalDateTime value;
 
 
     public EndDate(LocalDateTime value) {
@@ -17,7 +17,7 @@ public class EndDate {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public LocalDateTime getValue() {
         return value;
     }
 

@@ -1,19 +1,19 @@
 package com.ias.SemilleroHandyman.technicalRequest.application.domain;
 
-public class ServiceRequest {
+public class TechnicalRequest {
 
     public final Id id;
     public final TechnicalId technicalId;
     public final RequestId requestId;
-    public final StarDate starDate;
-    public final EndDate starEnd;
+    public final StartDate starDate;
+    public final EndDate endDate;
 
-    public ServiceRequest(Id id, TechnicalId technicalId, RequestId requestId, StarDate starDate, EndDate starEnd) {
+    public TechnicalRequest(Id id, TechnicalId technicalId, RequestId requestId, StartDate starDate, EndDate starEnd) {
         this.id = id;
         this.technicalId = technicalId;
         this.requestId = requestId;
         this.starDate = starDate;
-        this.starEnd = starEnd;
+        this.endDate = starEnd;
     }
 
     public Id getId() {
@@ -32,8 +32,8 @@ public class ServiceRequest {
         return starDate;
     }
 
-    public EndDate getStarEnd() {
-        return starEnd;
+    public EndDate getEndDate() {
+        return endDate;
     }
 }
 

@@ -1,8 +1,7 @@
 package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
-
-import com.ias.SemilleroHandyman.core.technicalRequest.domain.ServiceRequest;
-import com.ias.SemilleroHandyman.core.technicalRequest.ports.out.RepositoryTechnical;
+import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRequest;
+import com.ias.SemilleroHandyman.technicalRequest.application.ports.out.RepositoryTechnical;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -21,17 +20,17 @@ public class SQLRepository implements RepositoryTechnical {
     }
 
     @Override
-    public void create(ServiceRequest serviceRequest) {
+    public void create(TechnicalRequest technicalRequest) {
         String sql = "INSERT INTO ServiceRequest (id,technical_id,request_id,start_date,end_date) VALUES (?, ?, ?, ?, ?)";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setLong(1,serviceRequest.getId().getValue());
-            preparedStatement.setLong(2, serviceRequest.getTechnicalId().getValue());
-            preparedStatement.setInt(3, serviceRequest.getRequestId().getValue());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(serviceRequest.getStarDate().toString()));
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(serviceRequest.getStarEnd().toString()));
+            preparedStatement.setLong(1,technicalRequest. getId().getValue());
+            preparedStatement.setLong(2, technicalRequest.getTechnicalId().getValue());
+            preparedStatement.setInt(3, technicalRequest.getRequestId().getValue());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(technicalRequest.getStarDate().toString()));
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(technicalRequest.getEndDate().toString()));
             preparedStatement.executeUpdate();
 
         } catch (SQLException exception) {
