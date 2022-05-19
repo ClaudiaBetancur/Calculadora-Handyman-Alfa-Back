@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 
 public class CreateRequestService implements CreateRequestUseCase {
 
-    /*private final TechnicalRepository technicalRepository;
+    private final TechnicalRepository technicalRepository;
 
     public CreateRequestService(TechnicalRepository technicalRepository) {
         this.technicalRepository = technicalRepository;
-    }*/
+    }
 
     @Override
     public TechnicalRequestDTO excute(TechnicalRequestDTO technicalRequestDTO)
