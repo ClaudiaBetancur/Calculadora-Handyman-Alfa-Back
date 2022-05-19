@@ -1,5 +1,7 @@
 package com.ias.SemilleroHandyman.technicalRequest.application.models;
 
+import com.ias.SemilleroHandyman.technicalRequest.application.domain.*;
+
 import java.time.LocalDateTime;
 
 public class TechnicalRequestDTO {
@@ -18,6 +20,15 @@ public class TechnicalRequestDTO {
         this.recuestId = recuestId;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public TechnicalRequest toDomain() {
+        return new TechnicalRequest(new Id(id),
+                new TechnicalId(technicalId),
+                new RequestId(recuestId),
+                new StartDate(startDate),
+                new EndDate(endDate)
+        );
     }
 
     public Integer getId() {
