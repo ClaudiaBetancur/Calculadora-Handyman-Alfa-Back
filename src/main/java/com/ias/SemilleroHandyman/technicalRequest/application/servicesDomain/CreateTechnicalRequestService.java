@@ -11,8 +11,10 @@ import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRe
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.out.RepositoryTechnicalRequest;
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -30,20 +32,23 @@ public class CreateTechnicalRequestService implements CreateTechnicalRequestUseC
 
     @Override
     public TechnicalRequestDTO excute(TechnicalRequestDTO technicalRequestDTO) {
+
+        Validate.isTrue(technicalRequestDTO.getStartDate().isBefore(technicalRequestDTO.getEndDate()), "the end date must not be less than the start date");
+
         Optional<People> people = peopleRepository.getPersonByDocument(new Document(technicalRequestDTO.getDocument()));
         if(people.isEmpty()){
-            throw new Error("El técnico no se encuentro registrado");
+            throw new IllegalArgumentException("El técnico no se encuentro registrado");
         }
         Optional<Request> request = requestRepository.get(new RequestId(technicalRequestDTO.getRequestId()));
         if(request.isEmpty()){
-            throw new Error("El servicio no se encuentra registrado");
+            throw new IllegalArgumentException("El servicio no se encuentra registrado");
         }
         Optional<TechnicalRequest> technicalRequestDTO2 = repositoryTechnical.getByDateRange(new DateRange(
                 technicalRequestDTO.getStartDate(),
                 technicalRequestDTO.getEndDate()
         ));
         if(!technicalRequestDTO2.isEmpty()){
-            throw new Error("El técnico ya tiene servicios registrado en el rango de fecha ingresado");
+            throw new IllegalArgumentException("El técnico ya tiene servicios registrados en el rango de fecha ingresado");
         }
         technicalRequestDTO.setId(0);
         technicalRequestDTO.setTechnicalId(people.get().getId().getValue());
