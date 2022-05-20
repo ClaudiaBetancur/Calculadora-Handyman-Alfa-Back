@@ -1,25 +1,36 @@
 package com.ias.SemilleroHandyman.people.application.models;
 
-import com.ias.SemilleroHandyman.people.application.dominio.Document;
-import com.ias.SemilleroHandyman.people.application.dominio.FullName;
+import com.ias.SemilleroHandyman.people.application.dominio.*;
 import com.ias.SemilleroHandyman.people.application.dominio.PersonId;
-import com.ias.SemilleroHandyman.people.application.dominio.People;
-import com.ias.SemilleroHandyman.people.application.dominio.TypeDocumentId;
 
-public class PeopleDTO {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class PeopleDBO {
+    private Integer id;
     private String document;
     private String fullName;
-    private Integer id;
     private Integer typeDocumentId;
 
-    public PeopleDTO() {
+    public PeopleDBO() {
     }
 
-    public PeopleDTO(String document, String fullName, Integer id, Integer typeDocumentId) {
+    public PeopleDBO(Integer id, String document, String fullName, Integer typeDocumentId) {
+        this.id = id;
         this.document = document;
         this.fullName = fullName;
-        this.id = id;
         this.typeDocumentId = typeDocumentId;
+    }
+
+    public static PeopleDBO fromResultSet(ResultSet resultSet) throws SQLException {
+        PeopleDBO peopleRequestDBO = new PeopleDBO();
+
+        peopleRequestDBO.setId(resultSet.getInt("id"));
+        peopleRequestDBO.setDocument(resultSet.getString("document"));
+        peopleRequestDBO.setFullName((resultSet.getString("fullname")));
+        peopleRequestDBO.setTypeDocumentId(resultSet.getInt("type_document_id"));
+
+        return peopleRequestDBO;
     }
 
     public People toDomain() {
@@ -31,13 +42,12 @@ public class PeopleDTO {
         );
     }
 
-    public static PeopleDTO fromDomain(People person) {
-        return new PeopleDTO(
-                person.getDocument().getValue(),
-                person.getFullName().getValue(),
-                person.getTypeDocumentId().getValue(),
-                person.getId().getValue()
-        );
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDocument() {
@@ -54,14 +64,6 @@ public class PeopleDTO {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getTypeDocumentId() {

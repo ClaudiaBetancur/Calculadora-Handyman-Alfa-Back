@@ -2,7 +2,7 @@ package com.ias.SemilleroHandyman.infraestructure.controllers;
 
 import com.ias.SemilleroHandyman.sharedDomain.errors.ApplicationError;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
-import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateRequestUseCase;
+import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin()
 public class ControllerRequest {
 
-    public final CreateRequestUseCase creatRequestUseCase;
+    public final CreateTechnicalRequestUseCase creatRequestUseCase;
 
-    public ControllerRequest(CreateRequestUseCase creatRequestUseCase) {
+    public ControllerRequest(CreateTechnicalRequestUseCase creatRequestUseCase) {
         this.creatRequestUseCase = creatRequestUseCase;
     }
 
@@ -21,7 +21,7 @@ public class ControllerRequest {
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
-            return ResponseEntity.ok("Registro exitoso.");
+            return ResponseEntity.ok("¡Registro exitoso!");
 
         } catch (IllegalArgumentException | NullPointerException e) {
             ApplicationError aplicationError = new ApplicationError(
