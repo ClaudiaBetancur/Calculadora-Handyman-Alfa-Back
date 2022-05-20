@@ -2,10 +2,10 @@ package com.ias.SemilleroHandyman.request.application.domain;
 
 import org.apache.commons.lang3.Validate;
 
-public class Id {
+public class RequestId {
     private final Integer value;
 
-    public Id(Integer value) {
+    public RequestId(Integer value) {
         Validate.notNull(value, "Id can not be null");
         this.value = value;
     }

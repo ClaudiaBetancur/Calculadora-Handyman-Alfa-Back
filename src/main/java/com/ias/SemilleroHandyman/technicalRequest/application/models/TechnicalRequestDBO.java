@@ -2,27 +2,42 @@ package com.ias.SemilleroHandyman.technicalRequest.application.models;
 
 import com.ias.SemilleroHandyman.technicalRequest.application.domain.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class TechnicalRequestDTO {
+public class TechnicalRequestDBO {
     private Integer id;
     private Integer technicalId;
-    private String document;
     private Integer requestId;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public TechnicalRequestDTO(Integer id, String document, Integer requestId, LocalDateTime startDate, LocalDateTime endDate) {
+    public TechnicalRequestDBO() {
+    }
+
+    public TechnicalRequestDBO(Integer id, Integer technicalId, Integer requestId, LocalDateTime startDate, LocalDateTime endDate) {
         this.id = id;
-        this.document = document;
+        this.technicalId = technicalId;
         this.requestId = requestId;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
+    public static TechnicalRequestDBO fromResultSet(ResultSet resultSet) throws SQLException {
+        TechnicalRequestDBO technicalRequestDBO = new TechnicalRequestDBO();
+
+        technicalRequestDBO.setId(resultSet.getInt("id"));
+        technicalRequestDBO.setTechnicalId(resultSet.getInt("technical_id"));
+        technicalRequestDBO.setRequestId((resultSet.getInt("request_id")));
+        technicalRequestDBO.setStartDate(resultSet.getTimestamp("start_date").toLocalDateTime());
+        technicalRequestDBO.setEndDate(resultSet.getTimestamp("end_date").toLocalDateTime());
+
+        return technicalRequestDBO;
+    }
+
     public TechnicalRequest toDomain() {
-        return new TechnicalRequest(
-                new Id(id),
+        return new TechnicalRequest(new Id(id),
                 new TechnicalId(technicalId),
                 new RequestId(requestId),
                 new StartDate(startDate),
@@ -46,20 +61,12 @@ public class TechnicalRequestDTO {
         this.technicalId = technicalId;
     }
 
-    public String getDocument() {
-        return document;
-    }
-
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
     public Integer getRequestId() {
         return requestId;
     }
 
-    public void setRequestId(Integer recuestId) {
-        this.requestId = recuestId;
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
     }
 
     public LocalDateTime getStartDate() {

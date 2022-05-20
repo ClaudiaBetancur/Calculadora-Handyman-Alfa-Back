@@ -2,9 +2,12 @@ package com.ias.SemilleroHandyman.request.application.models;
 
 import com.ias.SemilleroHandyman.request.application.domain.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class RequestDTO {
+public class RequestDBO {
+
     private Integer id;
     private Integer serviceId;
     private Integer customerId;
@@ -12,16 +15,29 @@ public class RequestDTO {
     private String estimatedDay;
     private LocalDateTime creatAt;
 
-    public RequestDTO() {
+    public RequestDBO() {
     }
 
-    public RequestDTO(Integer id, Integer serviceId, Integer customerId, String direction, String estimatedDay, LocalDateTime creatAt) {
+    public RequestDBO(Integer id, Integer serviceId, Integer customerId, String direction, String estimatedDay, LocalDateTime creatAt) {
         this.id = id;
         this.serviceId = serviceId;
         this.customerId = customerId;
         this.direction = direction;
         this.estimatedDay = estimatedDay;
         this.creatAt = creatAt;
+    }
+
+    public static RequestDBO fromResultSet(ResultSet resultSet) throws SQLException {
+        RequestDBO requestRequestDBO = new RequestDBO();
+
+        requestRequestDBO.setId(resultSet.getInt("id"));
+        requestRequestDBO.setCustomerId(resultSet.getInt("customer_id"));
+        requestRequestDBO.setServiceId((resultSet.getInt("service_id")));
+        requestRequestDBO.setDirection(resultSet.getString("direction"));
+        requestRequestDBO.setEstimatedDay(resultSet.getString("estimated_day"));
+        requestRequestDBO.setCreatAt(resultSet.getTimestamp("creat_at").toLocalDateTime());
+
+        return requestRequestDBO;
     }
 
     public Request toDomain() {
@@ -35,23 +51,20 @@ public class RequestDTO {
         );
     }
 
-    public static RequestDTO fromDomain(Request Request) {
-        return new RequestDTO(
-                Request.getId().getValue(),
-                Request.getCustumerId().getValue(),
-                Request.getServiceId().getValue(),
-                Request.getDirection().getValue(),
-                Request.getEstimatedDay().getValue(),
-                Request.getCreatAt().getValue()
-        );
+    public Integer getId() {
+        return id;
     }
 
-    public LocalDateTime getCreatAt() {
-        return creatAt;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCreatAt(LocalDateTime creatAt) {
-        this.creatAt = creatAt;
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 
     public Integer getCustomerId() {
@@ -78,19 +91,11 @@ public class RequestDTO {
         this.estimatedDay = estimatedDay;
     }
 
-    public Integer getId() {
-        return id;
+    public LocalDateTime getCreatAt() {
+        return creatAt;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
+    public void setCreatAt(LocalDateTime creatAt) {
+        this.creatAt = creatAt;
     }
 }

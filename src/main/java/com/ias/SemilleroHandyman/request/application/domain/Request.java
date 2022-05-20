@@ -1,20 +1,20 @@
 package com.ias.SemilleroHandyman.request.application.domain;
 
 public class Request {
-    private final CreatAt creatAt;
+    private final RequestId id;
     private final CustumerId custumerId;
+    private final ServiceId serviceId;
     private final Direction direction;
     private final EstimatedDay estimatedDay;
-    private final Id id;
-    private final ServiceId serviceId;
+    private final CreatAt creatAt;
 
-    public Request(CreatAt creatAt, CustumerId custumerId, Direction direction, EstimatedDay estimatedDay, Id id, ServiceId serviceId) {
-        this.creatAt = creatAt;
+    public Request(RequestId id, CustumerId custumerId, ServiceId serviceId, Direction direction, EstimatedDay estimatedDay, CreatAt creatAt) {
+        this.id = id;
         this.custumerId = custumerId;
+        this.serviceId = serviceId;
         this.direction = direction;
         this.estimatedDay = estimatedDay;
-        this.id = id;
-        this.serviceId = serviceId;
+        this.creatAt = creatAt;
     }
 
     public CreatAt getCreatAt() {
@@ -33,7 +33,7 @@ public class Request {
         return estimatedDay;
     }
 
-    public Id getId() {
+    public RequestId getId() {
         return id;
     }
 
