@@ -5,12 +5,10 @@ import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRe
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateRequestUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin()
 public class ControllerRequest {
 
     public final CreateRequestUseCase creatRequestUseCase;
