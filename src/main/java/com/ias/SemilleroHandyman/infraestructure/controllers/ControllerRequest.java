@@ -1,6 +1,7 @@
 package com.ias.SemilleroHandyman.infraestructure.controllers;
 
-import com.ias.SemilleroHandyman.sharedDomain.errors.ApplicationError;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse.ResponseData;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
 import org.springframework.http.HttpStatus;
@@ -21,20 +22,32 @@ public class ControllerRequest {
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
-            return ResponseEntity.ok("¡Registro exitoso!");
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String usuarioJson = objectMapper.writeValueAsString(technical);
+
+            ResponseData responseData= new ResponseData(
+                    true,
+                    "",
+                    "¡Registro exitoso!",
+                    usuarioJson
+            );
+            return ResponseEntity.ok(responseData);
 
         } catch (IllegalArgumentException | NullPointerException e) {
-            ApplicationError aplicationError = new ApplicationError(
+            ResponseData responseData = new ResponseData(
+                    false,
                     "InputValidation",
-                    "Bad input data: " + e.getMessage()
-            );
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(aplicationError);
-        } catch (Exception exception) {
-            ApplicationError aplicationError = new ApplicationError(
+                    e.getMessage(),
+                    null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
+        } catch (Exception | Error exception) {
+            ResponseData responseData = new ResponseData(
+                    false,
                     "SystemError",
-                    exception.getMessage()
-            );
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(aplicationError);
+                    "server error try again later",
+                    null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
     }
 }
