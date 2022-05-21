@@ -77,4 +77,16 @@ public class TechnicalRequestDTO {
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", technicalId=" + technicalId +
+                ", document='" + document + '\'' +
+                ", requestId=" + requestId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
