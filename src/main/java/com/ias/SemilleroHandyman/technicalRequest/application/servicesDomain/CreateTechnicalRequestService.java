@@ -54,7 +54,7 @@ public class CreateTechnicalRequestService implements CreateTechnicalRequestUseC
         technicalRequestDTO.setTechnicalId(people.get().getId().getValue());
         TechnicalRequest technicalRequest = technicalRequestDTO.toDomain();
         repositoryTechnical.create(technicalRequest);
-        return null;
+        return technicalRequestDTO;
     }
 
 }

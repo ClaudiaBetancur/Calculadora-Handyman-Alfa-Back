@@ -23,14 +23,11 @@ public class ControllerRequest {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String usuarioJson = objectMapper.writeValueAsString(technical);
-
             ResponseData responseData= new ResponseData(
                     true,
                     "",
                     "¡Registro exitoso!",
-                    usuarioJson
+                    technical.toString()
             );
             return ResponseEntity.ok(responseData);
 
@@ -49,5 +46,15 @@ public class ControllerRequest {
                     null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
+    }
+
+    @ExceptionHandler()
+    public ResponseEntity<?> handleException(Exception ex) {
+        ResponseData responseData = new ResponseData(
+                false,
+                "SystemError",
+                "Revisa los datos ingresados",
+                null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 }
