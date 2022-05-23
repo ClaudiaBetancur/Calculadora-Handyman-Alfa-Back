@@ -42,7 +42,7 @@ public class ControllerRequest {
             ResponseData responseData = new ResponseData(
                     false,
                     "SystemError",
-                    "server error try again later",
+                    "Error del servidor inténtalo de nuevo más tarde",
                     null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }

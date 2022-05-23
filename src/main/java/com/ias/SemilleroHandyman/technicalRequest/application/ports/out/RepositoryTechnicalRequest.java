@@ -8,6 +8,6 @@ import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRe
 import java.util.Optional;
 
 public interface RepositoryTechnicalRequest {
-    void create(TechnicalRequest technicalRequest);
+    Integer create(TechnicalRequest technicalRequest);
     Optional<TechnicalRequest> getByDateRange(DateRange dateRange);
 }
