@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfiguration {
     @Bean
-    @Profile("dev")
+    //@Profile("dev")
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5434/handyman");
@@ -22,7 +22,7 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    @Profile("test")
+    //@Profile("test")
     public DataSource dataSourceTest() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5434/handymanTest");

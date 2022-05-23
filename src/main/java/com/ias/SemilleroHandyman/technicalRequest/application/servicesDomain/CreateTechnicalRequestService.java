@@ -33,7 +33,7 @@ public class CreateTechnicalRequestService implements CreateTechnicalRequestUseC
     @Override
     public TechnicalRequestDTO excute(TechnicalRequestDTO technicalRequestDTO) {
 
-        Validate.isTrue(technicalRequestDTO.getStartDate().isBefore(technicalRequestDTO.getEndDate()), "the end date must not be less than the start date");
+        Validate.isTrue(technicalRequestDTO.getStartDate().isBefore(technicalRequestDTO.getEndDate()), "La fecha de finalización no debe ser anterior a la fecha de inicio");
 
         Optional<People> people = peopleRepository.getPersonByDocument(new Document(technicalRequestDTO.getDocument()));
         if(people.isEmpty()){
