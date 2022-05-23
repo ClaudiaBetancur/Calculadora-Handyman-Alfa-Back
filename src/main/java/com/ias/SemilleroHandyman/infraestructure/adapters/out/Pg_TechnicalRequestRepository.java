@@ -20,18 +20,30 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
     }
 
     @Override
-    public void create(TechnicalRequest technicalRequest) {
+    public Integer create(TechnicalRequest technicalRequest) {
         String sql = "INSERT INTO technicals_x_requests (technical_id,request_id,start_date,end_date) VALUES (?, ?, ?, ?)";
-
+        Integer idGenerate = -1;
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             //preparedStatement.setInt(1,technicalRequest. getId().getValue());
             preparedStatement.setInt(1, technicalRequest.getTechnicalId().getValue());
             preparedStatement.setInt(2, technicalRequest.getRequestId().getValue());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(technicalRequest.getStarDate().getValue()));
             preparedStatement.setTimestamp(4, Timestamp.valueOf(technicalRequest.getEndDate().getValue()));
-            preparedStatement.execute();
+            //preparedStatement.execute();
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new IllegalArgumentException("No se pudo guardar");
+            }
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                idGenerate = generatedKeys.getInt(1);
+            }
+            return idGenerate;
 
         } catch (SQLException exception) {
             throw new RuntimeException("Error querying database " + exception.getMessage(),  exception);
