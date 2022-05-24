@@ -1,5 +1,7 @@
 package com.ias.SemilleroHandyman.technicalRequest.application.models;
 
+import com.ias.SemilleroHandyman.people.application.dominio.People;
+import com.ias.SemilleroHandyman.people.application.models.PeopleDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.domain.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,16 @@ public class TechnicalRequestDTO {
                 new RequestId(requestId),
                 new StartDate(startDate),
                 new EndDate(endDate)
+        );
+    }
+
+    public static TechnicalRequestDTO fromDomain(TechnicalRequest technicalRequest) {
+        return new TechnicalRequestDTO(
+                technicalRequest.getId().getValue(),
+                technicalRequest.getTechnicalId().getValue().toString(),
+                technicalRequest.getRequestId().getValue(),
+                technicalRequest.getStarDate().getValue(),
+                technicalRequest.getEndDate().getValue()
         );
     }
 

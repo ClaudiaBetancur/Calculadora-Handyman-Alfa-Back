@@ -1,13 +1,16 @@
 package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
 import com.ias.SemilleroHandyman.sharedDomain.models.DateRange;
+import com.ias.SemilleroHandyman.technicalRequest.application.domain.StartDate;
 import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRequest;
+import com.ias.SemilleroHandyman.technicalRequest.application.models.QueryByStartDateDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDBO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.out.RepositoryTechnicalRequest;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -52,13 +55,14 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
 
     @Override
     public Optional<TechnicalRequest> getByDateRange(DateRange dateRange) {
-        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND end_date BETWEEN ? AND ?";
+        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND end_date BETWEEN ? AND ? AND";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setTimestamp(1,Timestamp.valueOf(dateRange.getStartDate()));
             preparedStatement.setTimestamp(2,Timestamp.valueOf(dateRange.getEndDate()));
             preparedStatement.setTimestamp(3,Timestamp.valueOf(dateRange.getStartDate()));
             preparedStatement.setTimestamp(4,Timestamp.valueOf(dateRange.getEndDate()));
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -70,7 +74,31 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
             }
 
         }catch (SQLException exception) {
-            throw new RuntimeException("Error querying database", exception);
+            throw new RuntimeException("Error al consultar la base de datos ", exception);
+        }
+    }
+
+    @Override
+    public Optional<TechnicalRequest> getByStartDate(QueryByStartDateDTO queryByStartDateDTO) {
+        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND " + queryByStartDateDTO.getTypeFilter() + " = ?";
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setTimestamp(1,Timestamp.valueOf(queryByStartDateDTO.getStartDate()));
+            preparedStatement.setTimestamp(2,Timestamp.valueOf(queryByStartDateDTO.getEndDate()));
+            preparedStatement.setInt(3, Integer.parseInt(queryByStartDateDTO.getIdentification()));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                TechnicalRequestDBO technicalRequestDBO = TechnicalRequestDBO.fromResultSet(resultSet);
+                TechnicalRequest technicalRequest = technicalRequestDBO.toDomain();
+                return Optional.of(technicalRequest);
+            } else {
+                return Optional.empty();
+            }
+
+        }catch (SQLException exception) {
+            throw new RuntimeException("Error al consultar la base de datos ", exception);
         }
     }
 }
