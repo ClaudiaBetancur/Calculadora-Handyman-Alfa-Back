@@ -2,6 +2,7 @@ package com.ias.SemilleroHandyman.infraestructure.controllers;
 
 import com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse.ResponseData;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.QueryByStartDateDTO;
+import com.ias.SemilleroHandyman.technicalRequest.application.models.TechinicalResquestHoursDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
 import com.ias.SemilleroHandyman.technicalRequest.application.servicesDomain.QueryTechnicalRequestService;
@@ -49,7 +50,7 @@ public class ControllerRequest {
                     false,
                     "SystemError",
                     "Error del servidor inténtalo de nuevo más tarde",
-                    null);
+                    exception.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
     }
@@ -58,13 +59,13 @@ public class ControllerRequest {
     //@GetMapping
     public ResponseEntity<?> queryByStarDate(@RequestBody QueryByStartDateDTO queryByStartDateDTO) {
         try {
-            ArrayList<TechnicalRequestDTO> technicalRequestDTOList = queryTechnicalRequestService.excute(queryByStartDateDTO);
+            TechinicalResquestHoursDTO techinicalResquestHoursDTO = queryTechnicalRequestService.excute(queryByStartDateDTO);
 
             ResponseData responseData= new ResponseData(
                     true,
                     "",
-                    "¡Registro exitoso!",
-                    technicalRequestDTOList.toString()
+                    "Horas trabajadas calculadas",
+                    techinicalResquestHoursDTO.toString()
             );
             return ResponseEntity.ok(responseData);
 
@@ -80,7 +81,7 @@ public class ControllerRequest {
                     false,
                     "SystemError",
                     "Error del servidor inténtalo de nuevo más tarde",
-                    null);
+                    exception.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
     }

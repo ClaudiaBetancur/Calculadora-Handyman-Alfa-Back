@@ -65,4 +65,16 @@ public class TechinicalResquestHoursDTO {
     public void setSundayExtras(Integer sundayExtras) {
         this.sundayExtras = sundayExtras;
     }
+
+    @Override
+    public String toString() {
+        return "hoursWorked = {" +
+                "normal=" + normal +
+                ", normalExtras=" + normalExtras +
+                ", nocturnal=" + nocturnal +
+                ", nightExtras=" + nightExtras +
+                ", Sundays=" + Sundays +
+                ", sundayExtras=" + sundayExtras +
+                '}';
+    }
 }

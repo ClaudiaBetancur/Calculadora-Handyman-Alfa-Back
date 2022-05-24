@@ -14,6 +14,9 @@ public class TechnicalRequestDTO {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public TechnicalRequestDTO() {
+    }
+
     public TechnicalRequestDTO(Integer id, String document, Integer requestId, LocalDateTime startDate, LocalDateTime endDate) {
         this.id = id;
         this.document = document;

@@ -5,12 +5,14 @@ import com.ias.SemilleroHandyman.technicalRequest.application.domain.StartDate;
 import com.ias.SemilleroHandyman.technicalRequest.application.domain.TechnicalRequest;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.QueryByStartDateDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDBO;
+import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.out.RepositoryTechnicalRequest;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
@@ -55,7 +57,7 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
 
     @Override
     public Optional<TechnicalRequest> getByDateRange(DateRange dateRange) {
-        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND end_date BETWEEN ? AND ? AND";
+        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? OR end_date BETWEEN ? AND ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setTimestamp(1,Timestamp.valueOf(dateRange.getStartDate()));
@@ -79,7 +81,7 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
     }
 
     @Override
-    public Optional<TechnicalRequest> getByStartDate(QueryByStartDateDTO queryByStartDateDTO) {
+    public ArrayList<TechnicalRequestDTO> getByStartDate(QueryByStartDateDTO queryByStartDateDTO) {
         String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND " + queryByStartDateDTO.getTypeFilter() + " = ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -89,13 +91,15 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            ArrayList<TechnicalRequestDTO> technicalRequestDTOList = new ArrayList();
+
+            while(resultSet.next()) {
                 TechnicalRequestDBO technicalRequestDBO = TechnicalRequestDBO.fromResultSet(resultSet);
                 TechnicalRequest technicalRequest = technicalRequestDBO.toDomain();
-                return Optional.of(technicalRequest);
-            } else {
-                return Optional.empty();
+                technicalRequestDTOList.add(TechnicalRequestDTO.fromDomain(technicalRequest));
             }
+
+            return technicalRequestDTOList;
 
         }catch (SQLException exception) {
             throw new RuntimeException("Error al consultar la base de datos ", exception);
