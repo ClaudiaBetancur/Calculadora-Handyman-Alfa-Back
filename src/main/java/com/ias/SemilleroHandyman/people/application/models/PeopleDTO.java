@@ -35,8 +35,8 @@ public class PeopleDTO {
         return new PeopleDTO(
                 person.getDocument().getValue(),
                 person.getFullName().getValue(),
-                person.getTypeDocumentId().getValue(),
-                person.getId().getValue()
+                person.getId().getValue(),
+                person.getTypeDocumentId().getValue()
         );
     }
 
@@ -70,5 +70,15 @@ public class PeopleDTO {
 
     public void setTypeDocumentId(Integer typeDocumentId) {
         this.typeDocumentId = typeDocumentId;
+    }
+
+    @Override
+    public String toString() {
+        return "\"person\":{" +
+                "\"document\":\"" + document + "\"" +
+                ", \"fullName\":\"" + fullName + "\"" +
+                ", \"id\":" + id +
+                ", \"typeDocumentId\":" + typeDocumentId +
+                '}';
     }
 }

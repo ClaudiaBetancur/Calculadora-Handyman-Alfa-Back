@@ -6,7 +6,7 @@ public class FullName {
     private final String value;
 
     public FullName(String value) {
-        Validate.notNull(value, "Full name can not be null");
+        Validate.notNull(value, "El nombre completo no puede ser nulo");
         this.value = value;
     }
 

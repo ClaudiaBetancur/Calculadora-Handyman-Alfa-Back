@@ -8,7 +8,7 @@ public class CreatAt {
     private final LocalDateTime value;
 
     public CreatAt(LocalDateTime value) {
-        Validate.notNull(value, "Creat at can not be null");
+        Validate.notNull(value, "La fecha de registro no puede ser nulo");
         this.value = value;
     }
 

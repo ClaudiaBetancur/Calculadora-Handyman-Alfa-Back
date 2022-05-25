@@ -7,7 +7,7 @@ public class TechnicalId {
     private final Integer value;
 
     public TechnicalId(Integer value) {
-        Validate.notNull(value,  "TechnicalId identification can not be null.");
+        Validate.notNull(value,  "La identificación del técnico no puede estar vacia.");
 
         this.value = value;
     }

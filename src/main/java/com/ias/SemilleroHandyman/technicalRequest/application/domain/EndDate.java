@@ -12,8 +12,8 @@ public class EndDate {
 
     public EndDate(LocalDateTime value) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Validate.notNull(value,  "StarEnd date start can not be null.");
-        Validate.isTrue(localDateTime.isAfter(value), "the end date cannot be greater than the current date");
+        Validate.notNull(value,  "La fecha de inicio no puede estar vacia");
+        Validate.isTrue(localDateTime.isAfter(value), "la fecha de finalización no puede ser posterior a la fecha actual");
         this.value = value;
     }
 

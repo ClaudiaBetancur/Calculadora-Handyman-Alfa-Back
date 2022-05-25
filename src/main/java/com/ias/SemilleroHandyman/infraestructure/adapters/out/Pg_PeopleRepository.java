@@ -2,6 +2,7 @@ package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
 import com.ias.SemilleroHandyman.people.application.dominio.Document;
 import com.ias.SemilleroHandyman.people.application.dominio.People;
+import com.ias.SemilleroHandyman.people.application.dominio.PersonId;
 import com.ias.SemilleroHandyman.people.application.models.PeopleDBO;
 import com.ias.SemilleroHandyman.people.application.ports.out.PeopleRepository;
 import org.springframework.stereotype.Repository;
@@ -28,13 +29,27 @@ public class Pg_PeopleRepository implements PeopleRepository {
     }
 
     @Override
+    public Optional<People> getPersonById(PersonId personId) {
+        String columnaFilter = "id";
+        return getPerson(columnaFilter, personId.getValue().toString());
+    }
+
+    @Override
     public Optional<People> getPersonByDocument(Document document) {
-        String sql = "Select * From people Where document = ?";
+        String columnaFilter = "document";
+        return getPerson(columnaFilter, document.getValue());
+    }
+
+    private Optional<People> getPerson(String columnaFilter, String value){
+        String sql = "Select * From people Where " + columnaFilter + " = ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, document.getValue());
+            if(columnaFilter.equals("document")){
+                preparedStatement.setString(1, value);
+            }else{
+                preparedStatement.setInt(1, Integer.parseInt(value));
+            }
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if (resultSet.next()) {
                 PeopleDBO peopleDBO = PeopleDBO.fromResultSet(resultSet);
                 People people = peopleDBO.toDomain();
@@ -42,7 +57,6 @@ public class Pg_PeopleRepository implements PeopleRepository {
             } else {
                 return Optional.empty();
             }
-
         }catch (SQLException exception) {
             throw new RuntimeException("Error querying database", exception);
         }

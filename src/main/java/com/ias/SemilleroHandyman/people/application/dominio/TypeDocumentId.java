@@ -6,7 +6,7 @@ public class TypeDocumentId {
     private final Integer value;
 
     public TypeDocumentId(Integer value) {
-        Validate.notNull(value, "Type Document Id can not be null");
+        Validate.notNull(value, "El tipo de identificación del documento no puede ser nulo");
         this.value = value;
     }
 

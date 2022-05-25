@@ -6,7 +6,7 @@ public class EstimatedDay {
     private final String value;
 
     public EstimatedDay(String value) {
-        Validate.notNull(value, "Estimate can not be null");
+        Validate.notNull(value, "La estimación no puede ser nula");
         this.value = value;
     }
 

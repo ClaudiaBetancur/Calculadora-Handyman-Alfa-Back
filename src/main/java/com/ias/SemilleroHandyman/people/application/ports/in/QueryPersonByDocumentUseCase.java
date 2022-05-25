@@ -5,5 +5,5 @@ import com.ias.SemilleroHandyman.people.application.models.PeopleDTO;
 
 import java.util.Optional;
 
-public interface QueryPeopleUseCase extends UseCase<String, Optional<PeopleDTO>> {
+public interface QueryPersonByDocumentUseCase extends UseCase<String, Optional<PeopleDTO>> {
 }

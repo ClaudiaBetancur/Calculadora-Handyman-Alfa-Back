@@ -6,7 +6,7 @@ public class CustumerId {
     private final Integer value;
 
     public CustumerId(Integer value) {
-        Validate.notNull(value, "Customer Id can not be null");
+        Validate.notNull(value, "El ID de cliente no puede ser nulo");
         this.value = value;
     }
 

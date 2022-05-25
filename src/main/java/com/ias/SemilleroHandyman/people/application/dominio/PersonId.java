@@ -6,7 +6,7 @@ public class PersonId {
     private final Integer value;
 
     public PersonId(Integer value) {
-        Validate.notNull(value, "Id can not be null");
+        Validate.notNull(value, "La identificación no puede ser nula");
         this.value = value;
     }
 

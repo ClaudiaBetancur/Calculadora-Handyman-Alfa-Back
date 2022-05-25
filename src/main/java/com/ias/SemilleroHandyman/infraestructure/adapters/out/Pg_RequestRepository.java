@@ -22,7 +22,6 @@ public class Pg_RequestRepository implements RequestRepository {
         this.dataSource = dataSource;
     }
 
-
     @Override
     public void store(Request request) {
 
@@ -35,7 +34,6 @@ public class Pg_RequestRepository implements RequestRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, requestId.getValue());
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if (resultSet.next()) {
                 RequestDBO requestDBO = RequestDBO.fromResultSet(resultSet);
                 Request request = requestDBO.toDomain();
@@ -43,7 +41,6 @@ public class Pg_RequestRepository implements RequestRepository {
             } else {
                 return Optional.empty();
             }
-
         }catch (SQLException exception) {
             throw new RuntimeException("Error querying database", exception);
         }

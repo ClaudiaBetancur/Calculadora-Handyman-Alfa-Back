@@ -1,16 +1,17 @@
 package com.ias.SemilleroHandyman.infraestructure.controllers;
 
+import com.ias.SemilleroHandyman.people.application.models.PeopleDTO;
+import com.ias.SemilleroHandyman.people.application.ports.in.QueryPersonByIdUseCase;
 import com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse.ResponseData;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.QueryByStartDateDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechinicalResquestHoursDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
-import com.ias.SemilleroHandyman.technicalRequest.application.servicesDomain.QueryTechnicalRequestService;
+import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.QueryTechnicalRequestUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +19,13 @@ import java.util.Optional;
 public class ControllerRequest {
 
     public final CreateTechnicalRequestUseCase creatRequestUseCase;
-    public final QueryTechnicalRequestService queryTechnicalRequestService;
+    public final QueryTechnicalRequestUseCase queryTechnicalRequestUseCase;
+    public final QueryPersonByIdUseCase queryPersonByIdUseCase;
 
-    public ControllerRequest(CreateTechnicalRequestUseCase creatRequestUseCase, QueryTechnicalRequestService queryTechnicalRequestService) {
+    public ControllerRequest(CreateTechnicalRequestUseCase creatRequestUseCase, QueryTechnicalRequestUseCase queryTechnicalRequestUseCase, QueryPersonByIdUseCase queryPersonByIdUseCase) {
         this.creatRequestUseCase = creatRequestUseCase;
-        this.queryTechnicalRequestService = queryTechnicalRequestService;
+        this.queryTechnicalRequestUseCase = queryTechnicalRequestUseCase;
+        this.queryPersonByIdUseCase = queryPersonByIdUseCase;
     }
 
     @RequestMapping(value = "/technicalRequest", method = RequestMethod.POST)
@@ -55,20 +58,21 @@ public class ControllerRequest {
         }
     }
 
-    @RequestMapping(value = "/technicalRequest/hours", method = RequestMethod.GET)
+    @RequestMapping(value = "/technicalRequest/hours", method = RequestMethod.POST)
     //@GetMapping
     public ResponseEntity<?> queryByStarDate(@RequestBody QueryByStartDateDTO queryByStartDateDTO) {
         try {
-            TechinicalResquestHoursDTO techinicalResquestHoursDTO = queryTechnicalRequestService.excute(queryByStartDateDTO);
-
+            TechinicalResquestHoursDTO techinicalResquestHoursDTO = queryTechnicalRequestUseCase.excute(queryByStartDateDTO);
+            Optional<PeopleDTO> person = queryPersonByIdUseCase.excute(Integer.parseInt(queryByStartDateDTO.getIdentification()));
+            String jsonString = "{" + techinicalResquestHoursDTO.toString();
+            jsonString += (!person.isEmpty()) && (queryByStartDateDTO.getTypeFilter().equals("technical_id")) ? "," + person.get().toString() + "}" : "}";
             ResponseData responseData= new ResponseData(
                     true,
                     "",
                     "Horas trabajadas calculadas",
-                    techinicalResquestHoursDTO.toString()
+                    jsonString
             );
             return ResponseEntity.ok(responseData);
-
         } catch (IllegalArgumentException | NullPointerException e) {
             ResponseData responseData = new ResponseData(
                     false,

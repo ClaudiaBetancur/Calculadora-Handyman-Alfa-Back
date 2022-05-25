@@ -6,7 +6,7 @@ public class ServiceId {
     private final Integer value;
 
     public ServiceId(Integer value) {
-        Validate.notNull(value, "Service Id can not be null");
+        Validate.notNull(value, "El ID de servicio no puede ser nulo");
         this.value = value;
     }
 

@@ -12,9 +12,8 @@ public class StartDate {
 
     public StartDate(LocalDateTime value) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Validate.notNull(value,  "StarEnd date start can not be null.");
-        Validate.isTrue(localDateTime.isAfter(value), "the start date cannot be greater than the current date");
-        Validate.isTrue(localDateTime.minusDays(7).isBefore(value), "the start date cannot be earlier than one week from the current date");
+        Validate.notNull(value,  "La fecha de inicio no puede estar vacia");
+        Validate.isTrue(localDateTime.isAfter(value), "La fecha de inicio no puede ser posterior a la fecha actual");
         this.value = value;
     }
 

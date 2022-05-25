@@ -32,9 +32,22 @@ public class CreateTechnicalRequestService implements CreateTechnicalRequestUseC
 
     @Override
     public TechnicalRequestDTO excute(TechnicalRequestDTO technicalRequestDTO) {
+        validateDate(technicalRequestDTO);
+        People people = checkIfRecordsExist(technicalRequestDTO);
+        technicalRequestDTO.setId(0);
+        technicalRequestDTO.setTechnicalId(people.getId().getValue());
+        TechnicalRequest technicalRequest = technicalRequestDTO.toDomain();
+        repositoryTechnical.create(technicalRequest);
+        return technicalRequestDTO;
+    }
 
+    private void validateDate(TechnicalRequestDTO technicalRequestDTO){
+        LocalDateTime localDateTime = LocalDateTime.now();
         Validate.isTrue(technicalRequestDTO.getStartDate().isBefore(technicalRequestDTO.getEndDate()), "La fecha de finalización no debe ser anterior a la fecha de inicio");
+        Validate.isTrue(localDateTime.minusDays(7).isBefore(technicalRequestDTO.getStartDate()), "La fecha de inicio no puede ser anterior a una semana a partir de la fecha actual");
+    }
 
+    private People checkIfRecordsExist(TechnicalRequestDTO technicalRequestDTO){
         Optional<People> people = peopleRepository.getPersonByDocument(new Document(technicalRequestDTO.getDocument()));
         if(people.isEmpty()){
             throw new IllegalArgumentException("El técnico no se encuentro registrado");
@@ -50,11 +63,6 @@ public class CreateTechnicalRequestService implements CreateTechnicalRequestUseC
         if(!technicalRequestDTO2.isEmpty()){
             throw new IllegalArgumentException("El técnico ya tiene servicios registrados en el rango de fecha ingresado");
         }
-        technicalRequestDTO.setId(0);
-        technicalRequestDTO.setTechnicalId(people.get().getId().getValue());
-        TechnicalRequest technicalRequest = technicalRequestDTO.toDomain();
-        repositoryTechnical.create(technicalRequest);
-        return technicalRequestDTO;
+        return people.get();
     }
-
 }

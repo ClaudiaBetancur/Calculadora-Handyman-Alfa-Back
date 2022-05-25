@@ -68,13 +68,13 @@ public class TechinicalResquestHoursDTO {
 
     @Override
     public String toString() {
-        return "hoursWorked = {" +
-                "normal=" + normal +
-                ", normalExtras=" + normalExtras +
-                ", nocturnal=" + nocturnal +
-                ", nightExtras=" + nightExtras +
-                ", Sundays=" + Sundays +
-                ", sundayExtras=" + sundayExtras +
-                '}';
+        return "\"hoursWorked\" : {" +
+                "\"normal\":" + normal +
+                ", \"normalExtras\":" + normalExtras +
+                ", \"nocturnal\":" + nocturnal +
+                ", \"nightExtras\":" + nightExtras +
+                ", \"Sundays\":" + Sundays +
+                ", \"sundayExtras\":" + sundayExtras +
+                "}";
     }
 }

@@ -6,7 +6,7 @@ public class Document {
     private final String value;
 
     public Document(String value) {
-        Validate.notNull(value, "Document can not be null");
+        Validate.notNull(value, "El documento no puede ser nulo");
         this.value = value;
     }
 

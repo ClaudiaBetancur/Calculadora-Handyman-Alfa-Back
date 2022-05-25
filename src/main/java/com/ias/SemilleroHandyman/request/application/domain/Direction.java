@@ -6,7 +6,7 @@ public class Direction {
     private final String value;
 
     public Direction(String value) {
-        Validate.notNull(value, "Direction can not be null");
+        Validate.notNull(value, "La dirección no puede ser nula");
         this.value = value;
     }
 
