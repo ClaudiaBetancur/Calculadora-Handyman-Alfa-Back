@@ -14,7 +14,6 @@ import com.ias.SemilleroHandyman.technicalRequest.application.ports.out.Reposito
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service

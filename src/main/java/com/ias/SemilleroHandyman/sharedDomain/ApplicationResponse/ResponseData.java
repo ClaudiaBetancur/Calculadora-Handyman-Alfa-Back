@@ -1,7 +1,5 @@
 package com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse;
 
-import java.util.Objects;
-import java.util.Optional;
 
 public class ResponseData {
     private final boolean ok;

@@ -26,7 +26,6 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            //preparedStatement.setInt(1,technicalRequest. getId().getValue());
             preparedStatement.setInt(1, technicalRequest.getTechnicalId().getValue());
             preparedStatement.setInt(2, technicalRequest.getRequestId().getValue());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(technicalRequest.getStarDate().getValue()));
