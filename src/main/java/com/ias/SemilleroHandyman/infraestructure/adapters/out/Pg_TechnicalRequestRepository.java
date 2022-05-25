@@ -52,7 +52,7 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
 
     @Override
     public Optional<TechnicalRequest> getByDateRange(DateRange dateRange) {
-        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND end_date BETWEEN ? AND ?";
+        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? OR end_date BETWEEN ? AND ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setTimestamp(1,Timestamp.valueOf(dateRange.getStartDate()));

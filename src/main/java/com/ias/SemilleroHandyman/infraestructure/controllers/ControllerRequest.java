@@ -22,39 +22,20 @@ public class ControllerRequest {
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
-
-            ResponseData responseData= new ResponseData(
-                    true,
-                    "",
-                    "¡Registro exitoso!",
-                    technical.toString()
-            );
+            ResponseData responseData= new ResponseData( true, "", "¡Registro exitoso!", technical.toString()  );
             return ResponseEntity.ok(responseData);
-
         } catch (IllegalArgumentException | NullPointerException e) {
-            ResponseData responseData = new ResponseData(
-                    false,
-                    "InputValidation",
-                    e.getMessage(),
-                    null);
+            ResponseData responseData = new ResponseData( false,  "InputValidation", e.getMessage(),  null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         } catch (Exception | Error exception) {
-            ResponseData responseData = new ResponseData(
-                    false,
-                    "SystemError",
-                    "Error del servidor inténtalo de nuevo más tarde",
-                    null);
+            ResponseData responseData = new ResponseData( false, "SystemError", "Error del servidor inténtalo de nuevo más tarde", null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
     }
 
     @ExceptionHandler()
     public ResponseEntity<?> handleException(Exception ex) {
-        ResponseData responseData = new ResponseData(
-                false,
-                "SystemError",
-                "Revisa los datos ingresados",
-                null);
+        ResponseData responseData = new ResponseData( false, "SystemError", "Revisa los datos ingresados", null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 }
