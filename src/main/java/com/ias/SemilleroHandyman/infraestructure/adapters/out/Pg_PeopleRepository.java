@@ -1,10 +1,8 @@
 package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
-import com.ias.SemilleroHandyman.people.application.dominio.Document;
-import com.ias.SemilleroHandyman.people.application.dominio.People;
-import com.ias.SemilleroHandyman.people.application.dominio.PersonId;
-import com.ias.SemilleroHandyman.people.application.models.PeopleDBO;
-import com.ias.SemilleroHandyman.people.application.ports.out.PeopleRepository;
+import com.ias.SemilleroHandyman.application.people.dominio.*;
+import com.ias.SemilleroHandyman.application.people.models.PeopleDBO;
+import com.ias.SemilleroHandyman.application.people.ports.out.PeopleRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

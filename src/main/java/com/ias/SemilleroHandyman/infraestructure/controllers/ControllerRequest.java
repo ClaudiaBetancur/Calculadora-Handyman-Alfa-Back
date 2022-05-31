@@ -1,13 +1,13 @@
 package com.ias.SemilleroHandyman.infraestructure.controllers;
 
-import com.ias.SemilleroHandyman.people.application.models.PeopleDTO;
-import com.ias.SemilleroHandyman.people.application.ports.in.QueryPersonByIdUseCase;
+import com.ias.SemilleroHandyman.application.people.models.PeopleDTO;
+import com.ias.SemilleroHandyman.application.people.ports.in.QueryPersonByIdUseCase;
 import com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse.ResponseData;
-import com.ias.SemilleroHandyman.technicalRequest.application.models.QueryByStartDateDTO;
-import com.ias.SemilleroHandyman.technicalRequest.application.models.TechinicalResquestHoursDTO;
-import com.ias.SemilleroHandyman.technicalRequest.application.models.TechnicalRequestDTO;
-import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.CreateTechnicalRequestUseCase;
-import com.ias.SemilleroHandyman.technicalRequest.application.ports.in.QueryTechnicalRequestUseCase;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDateDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.TechinicalResquestHoursDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.TechnicalRequestDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.ports.in.CreateTechnicalRequestUseCase;
+import com.ias.SemilleroHandyman.application.technicalRequest.ports.in.QueryTechnicalRequestUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin()
+@RequestMapping(value = "/technicalRequest")
 public class ControllerRequest {
 
     public final CreateTechnicalRequestUseCase creatRequestUseCase;
@@ -28,7 +29,7 @@ public class ControllerRequest {
         this.queryPersonByIdUseCase = queryPersonByIdUseCase;
     }
 
-    @RequestMapping(value = "/technicalRequest", method = RequestMethod.POST)
+    @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody TechnicalRequestDTO technicalRequestDTO) {
         try {
             TechnicalRequestDTO technical = creatRequestUseCase.excute(technicalRequestDTO);
@@ -58,7 +59,7 @@ public class ControllerRequest {
         }
     }
 
-    @RequestMapping(value = "/technicalRequest/hours", method = RequestMethod.POST)
+    @PostMapping("/hours")
     //@GetMapping
     public ResponseEntity<?> queryByStarDate(@RequestBody QueryByStartDateDTO queryByStartDateDTO) {
         try {
@@ -99,4 +100,10 @@ public class ControllerRequest {
                 ex.toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
+
+
+
+
+    //@GetMapping()
+
 }

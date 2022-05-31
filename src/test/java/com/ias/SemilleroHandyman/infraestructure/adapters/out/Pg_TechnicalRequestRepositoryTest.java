@@ -1,13 +1,11 @@
 package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
-import com.ias.SemilleroHandyman.sharedDomain.models.DateRange;
-import com.ias.SemilleroHandyman.technicalRequest.application.domain.*;
+import com.ias.SemilleroHandyman.application.technicalRequest.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +30,7 @@ class Pg_TechnicalRequestRepositoryTest {
                 requestId,
                 startDate,
                 endDate
-                );
+        );
 
         int IdGenerate = pg_TechnicalRequestRepository.create(technicalRequest);
 

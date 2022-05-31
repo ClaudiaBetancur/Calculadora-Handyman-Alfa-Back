@@ -1,9 +1,8 @@
 package com.ias.SemilleroHandyman.infraestructure.adapters.out;
-
-import com.ias.SemilleroHandyman.request.application.domain.Request;
-import com.ias.SemilleroHandyman.request.application.domain.RequestId;
-import com.ias.SemilleroHandyman.request.application.models.RequestDBO;
-import com.ias.SemilleroHandyman.request.application.ports.out.RequestRepository;
+import com.ias.SemilleroHandyman.application.request.domain.Request;
+import com.ias.SemilleroHandyman.application.request.domain.RequestId;
+import com.ias.SemilleroHandyman.application.request.models.RequestDBO;
+import com.ias.SemilleroHandyman.application.request.ports.out.RequestRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
