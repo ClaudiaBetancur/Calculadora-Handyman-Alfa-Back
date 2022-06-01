@@ -2,7 +2,7 @@ package com.ias.SemilleroHandyman.infraestructure.adapters.out;
 
 import com.ias.SemilleroHandyman.sharedDomain.models.DateRange;
 import com.ias.SemilleroHandyman.application.technicalRequest.domain.TechnicalRequest;
-import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDateDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDate;
 import com.ias.SemilleroHandyman.application.technicalRequest.models.TechnicalRequestDBO;
 import com.ias.SemilleroHandyman.application.technicalRequest.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.application.technicalRequest.ports.out.RepositoryTechnicalRequest;
@@ -69,8 +69,8 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
     }
 
     @Override
-    public ArrayList<TechnicalRequestDTO> getByStartDate(QueryByStartDateDTO queryByStartDateDTO) {
-        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND " + queryByStartDateDTO.getTypeFilter() + " = ?";
+    public ArrayList<TechnicalRequestDTO> getByStartDate(QueryByStartDate queryByStartDateDTO) {
+        String sql = "Select * From technicals_x_requests Where start_date BETWEEN ? AND ? AND technical_id = ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setTimestamp(1,Timestamp.valueOf(queryByStartDateDTO.getStartDate()));
@@ -88,24 +88,5 @@ public class Pg_TechnicalRequestRepository implements RepositoryTechnicalRequest
             throw new RuntimeException("Error al consultar la base de datos ", exception);
         }
     }
-
-    /*@Override
-    void Delete(Id id){
-        String sql = "DELETE From technicals_x_requests Where id = ?";
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1,id.);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            ArrayList<TechnicalRequestDTO> technicalRequestDTOList = new ArrayList();
-            while(resultSet.next()) {
-                TechnicalRequestDBO technicalRequestDBO = TechnicalRequestDBO.fromResultSet(resultSet);
-                TechnicalRequest technicalRequest = technicalRequestDBO.toDomain();
-                technicalRequestDTOList.add(TechnicalRequestDTO.fromDomain(technicalRequest));
-            }
-            return technicalRequestDTOList;
-        }catch (SQLException exception) {
-            throw new RuntimeException("Error al consultar la base de datos ", exception);
-        }
-    }*/
 }
 

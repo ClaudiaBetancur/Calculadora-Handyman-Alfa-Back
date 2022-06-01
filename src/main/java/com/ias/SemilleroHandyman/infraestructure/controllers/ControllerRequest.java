@@ -3,8 +3,8 @@ package com.ias.SemilleroHandyman.infraestructure.controllers;
 import com.ias.SemilleroHandyman.application.people.models.PeopleDTO;
 import com.ias.SemilleroHandyman.application.people.ports.in.QueryPersonByIdUseCase;
 import com.ias.SemilleroHandyman.sharedDomain.ApplicationResponse.ResponseData;
-import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDateDTO;
-import com.ias.SemilleroHandyman.application.technicalRequest.models.TechinicalResquestHoursDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDate;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.TechinicalResquestHours;
 import com.ias.SemilleroHandyman.application.technicalRequest.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.application.technicalRequest.ports.in.CreateTechnicalRequestUseCase;
 import com.ias.SemilleroHandyman.application.technicalRequest.ports.in.QueryTechnicalRequestUseCase;
@@ -61,9 +61,9 @@ public class ControllerRequest {
 
     @PostMapping("/hours")
     //@GetMapping
-    public ResponseEntity<?> queryByStarDate(@RequestBody QueryByStartDateDTO queryByStartDateDTO) {
+    public ResponseEntity<?> queryByStarDate(@RequestBody QueryByStartDate queryByStartDateDTO) {
         try {
-            TechinicalResquestHoursDTO techinicalResquestHoursDTO = queryTechnicalRequestUseCase.excute(queryByStartDateDTO);
+            TechinicalResquestHours techinicalResquestHoursDTO = queryTechnicalRequestUseCase.excute(queryByStartDateDTO);
             Optional<PeopleDTO> person = queryPersonByIdUseCase.excute(Integer.parseInt(queryByStartDateDTO.getIdentification()));
             String jsonString = "{" + techinicalResquestHoursDTO.toString();
             jsonString += (!person.isEmpty()) && (queryByStartDateDTO.getTypeFilter().equals("technical_id")) ? "," + person.get().toString() + "}" : "}";

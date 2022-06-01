@@ -1,6 +1,6 @@
 package com.ias.SemilleroHandyman.application.technicalRequest.models;
 
-public class TechinicalResquestHoursDTO {
+public class TechinicalResquestHours {
 
     private Integer normal;
     private Integer normalExtras;
@@ -9,7 +9,7 @@ public class TechinicalResquestHoursDTO {
     private Integer Sundays;
     private Integer sundayExtras;
 
-    public TechinicalResquestHoursDTO() {
+    public TechinicalResquestHours() {
         normal = 0;
         normalExtras = 0;
         nocturnal = 0;

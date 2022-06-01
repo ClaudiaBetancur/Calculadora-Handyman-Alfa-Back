@@ -2,14 +2,14 @@ package com.ias.SemilleroHandyman.application.technicalRequest.models;
 
 import java.time.LocalDateTime;
 
-public class QueryByStartDateDTO {
+public class QueryByStartDate {
 
     private String typeFilter;
     private String identification;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public QueryByStartDateDTO(String typeFilter, String identification, LocalDateTime startDate, LocalDateTime endDate) {
+    public QueryByStartDate(String typeFilter, String identification, LocalDateTime startDate, LocalDateTime endDate) {
         this.typeFilter = typeFilter;
         this.identification = identification;
         this.startDate = startDate;

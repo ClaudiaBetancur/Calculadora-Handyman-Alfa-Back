@@ -4,8 +4,8 @@ import com.ias.SemilleroHandyman.application.people.ports.out.PeopleRepository;
 import com.ias.SemilleroHandyman.application.request.domain.Request;
 import com.ias.SemilleroHandyman.application.request.domain.RequestId;
 import com.ias.SemilleroHandyman.application.request.ports.out.RequestRepository;
-import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDateDTO;
-import com.ias.SemilleroHandyman.application.technicalRequest.models.TechinicalResquestHoursDTO;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.QueryByStartDate;
+import com.ias.SemilleroHandyman.application.technicalRequest.models.TechinicalResquestHours;
 import com.ias.SemilleroHandyman.application.technicalRequest.models.TechnicalRequestDTO;
 import com.ias.SemilleroHandyman.application.technicalRequest.ports.in.QueryTechnicalRequestUseCase;
 import com.ias.SemilleroHandyman.application.technicalRequest.ports.out.RepositoryTechnicalRequest;
@@ -34,13 +34,13 @@ public class QueryTechnicalRequestService implements QueryTechnicalRequestUseCas
     }
 
     @Override
-    public TechinicalResquestHoursDTO excute(QueryByStartDateDTO queryByStartDateDTO) {
+    public TechinicalResquestHours excute(QueryByStartDate queryByStartDateDTO) {
         queryByStartDateDTO = selectTypeFilter(queryByStartDateDTO);
         ArrayList<TechnicalRequestDTO> technicalRequestDTOList = repositoryTechnicalRequest.getByStartDate(queryByStartDateDTO);
         return calculateHours(technicalRequestDTOList, queryByStartDateDTO);
     }
 
-    private QueryByStartDateDTO selectTypeFilter(QueryByStartDateDTO queryByStartDateDTO){
+    private QueryByStartDate selectTypeFilter(QueryByStartDate queryByStartDateDTO){
         if(queryByStartDateDTO.getTypeFilter().equals("Technical")){
             queryByStartDateDTO.setTypeFilter("technical_id");
             Optional<People> people = peopleRepository.getPersonByDocument(new Document(queryByStartDateDTO.getIdentification()));
@@ -60,8 +60,8 @@ public class QueryTechnicalRequestService implements QueryTechnicalRequestUseCas
         return queryByStartDateDTO;
     }
 
-    private TechinicalResquestHoursDTO calculateHours(ArrayList<TechnicalRequestDTO> technicalRequestDTOList, QueryByStartDateDTO queryByStartDateDTO){
-        TechinicalResquestHoursDTO techinicalResquestHoursDTO = new TechinicalResquestHoursDTO();
+    private TechinicalResquestHours calculateHours(ArrayList<TechnicalRequestDTO> technicalRequestDTOList, QueryByStartDate queryByStartDateDTO){
+        TechinicalResquestHours techinicalResquestHoursDTO = new TechinicalResquestHours();
         for (TechnicalRequestDTO technicalRequestDTO : technicalRequestDTOList ){
             while (technicalRequestDTO.getStartDate().isBefore(technicalRequestDTO.getEndDate())){
                 if(technicalRequestDTO.getStartDate().isAfter(queryByStartDateDTO.getEndDate())){
@@ -89,7 +89,7 @@ public class QueryTechnicalRequestService implements QueryTechnicalRequestUseCas
         return time.isBefore(startNormal) || time.isAfter(endNormal) ? HOUR_NOCTURNAL : HOUR_NORMAL;
     }
 
-    private TechinicalResquestHoursDTO setHours(TechnicalRequestDTO technicalRequestDTO, TechinicalResquestHoursDTO techinicalResquestHoursDTO){
+    private TechinicalResquestHours setHours(TechnicalRequestDTO technicalRequestDTO, TechinicalResquestHours techinicalResquestHoursDTO){
         if(getTypeDay(technicalRequestDTO.getStartDate()).equals(HOUR_MONDAY_TO_SATURDAY)){
             if(getTypeHour(technicalRequestDTO.getStartDate()).equals(HOUR_NORMAL)){
                 if(sumatoryOfHours(techinicalResquestHoursDTO) < MAX_HOUR_FOR_WEEK){
@@ -114,7 +114,7 @@ public class QueryTechnicalRequestService implements QueryTechnicalRequestUseCas
         return techinicalResquestHoursDTO;
     }
 
-    private Integer sumatoryOfHours(TechinicalResquestHoursDTO techinicalResquestHoursDTO){
+    private Integer sumatoryOfHours(TechinicalResquestHours techinicalResquestHoursDTO){
         return techinicalResquestHoursDTO.getNormal() + techinicalResquestHoursDTO.getNocturnal() + techinicalResquestHoursDTO.getSundays();
     }
 }
